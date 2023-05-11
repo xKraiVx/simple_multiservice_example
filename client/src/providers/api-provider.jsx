@@ -11,24 +11,14 @@ export const ApiProvider = ({ children }) => {
       posts: posts.data,
     }));
   };
-  const fetchComments = async () => {
-    const comments = await postsApi.getAllComments();
-    setApiState((prev) => ({
-      ...prev,
-      comments: comments.data,
-    }));
-  };
 
   const [apiState, setApiState] = useState({
-    comments: {},
     posts: {},
     refetchPosts: fetchPosts,
-    refetchComments: fetchComments,
   });
 
   useEffect(() => {
     fetchPosts();
-    fetchComments();
   }, []);
 
   return <ApiContext.Provider value={apiState}>{children}</ApiContext.Provider>;

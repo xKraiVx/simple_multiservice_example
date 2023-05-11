@@ -1,8 +1,11 @@
 import { useMemo } from "react";
 import { CommentCreate } from "./comment-create";
 import { CommentList } from "./comment-list";
+import { useApiProvider } from "../hooks/use-api-provider";
 
-export const PostList = ({ posts }) => {
+export const PostList = () => {
+  const { posts } = useApiProvider();
+
   const renderedPosts = useMemo(
     () =>
       Object.values(posts).map((post, idx) => {

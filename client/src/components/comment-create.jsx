@@ -5,13 +5,13 @@ import { useApiProvider } from "../hooks/use-api-provider";
 export const CommentCreate = ({ postId }) => {
   const [content, setContent] = useState("");
 
-  const { refetchComments } = useApiProvider();
+  const { refetchPosts } = useApiProvider();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await postsApi.createComment(postId, content);
     setContent("");
-    refetchComments();
+    refetchPosts();
   };
   return (
     <div>

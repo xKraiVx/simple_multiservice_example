@@ -2,13 +2,24 @@ import { useMemo } from "react";
 import { useApiProvider } from "../hooks/use-api-provider";
 
 export const CommentList = ({ postId }) => {
-  const { comments } = useApiProvider();
+  const { posts } = useApiProvider();
+  const comments = posts[postId]?.comments;
+
   const renderComments = useMemo(
     () =>
-      comments?.[postId]?.map((comment, idx) => (
-        <li key={idx}>{comment.content}</li>
-      )),
-    [comments, postId]
+      comments?.map((comment, idx) => {
+        let content = comment.content;
+
+        if (comment.status === "pending") {
+          content = "This comment is awaiting moderation";
+        }
+        if (comment.status === "rejected") {
+          content = "This comment has been rejected";
+        }
+
+        return <li key={idx}>{content}</li>;
+      }),
+    [comments]
   );
 
   return (
